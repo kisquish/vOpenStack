@@ -1,2 +1,13 @@
 ---
 # handlers file for roles/role-chrony-controller
+- name: restart chrony
+  service:
+    name: chrony
+    state: restarted
+  become: true
+
+- name: restart chronyd
+  service:
+    name: chronyd
+    state: restarted
+  become: true
