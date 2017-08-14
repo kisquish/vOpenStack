@@ -1,21 +1,15 @@
 # Use public servers from the pool.ntp.org project.
 # Please consider joining the pool (http://www.pool.ntp.org/join.html).
-
-# server 0.centos.pool.ntp.org iburst
-# server 1.centos.pool.ntp.org iburst
-# server 2.centos.pool.ntp.org iburst
-# server 3.centos.pool.ntp.org iburst
-
-{% for srv in ntp_servers %}
-server {{ srv }} iburst
-{% endfor %}
-
+server 0.centos.pool.ntp.org iburst
+server 1.centos.pool.ntp.org iburst
+server 2.centos.pool.ntp.org iburst
+server 3.centos.pool.ntp.org iburst
 
 # Ignore stratum in source selection.
 stratumweight 0
 
 # Record the rate at which the system clock gains/losses time.
-driftfile {{ chrony_driftfile }}
+driftfile /var/lib/chrony/drift
 
 # Enable kernel RTC synchronization.
 rtcsync
@@ -26,7 +20,6 @@ makestep 10 3
 
 # Allow NTP client access from local network.
 #allow 192.168/16
-allow {{ subnet_ip }}
 
 # Listen for commands only on localhost.
 bindcmdaddress 127.0.0.1
@@ -35,7 +28,7 @@ bindcmdaddress ::1
 # Serve time even if not synchronized to any NTP server.
 #local stratum 10
 
-keyfile {{ chrony_keyfile }}
+keyfile /etc/chrony.keys
 
 # Specify the key used as password for chronyc.
 commandkey 1
@@ -49,5 +42,5 @@ noclientlog
 # Send a message to syslog if a clock adjustment is larger than 0.5 seconds.
 logchange 0.5
 
-logdir {{ chrony_logdir }}
+logdir /var/log/chrony
 #log measurements statistics tracking

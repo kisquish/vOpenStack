@@ -1,0 +1,22 @@
+---
+# tasks file for roles/role-chrony-nodes
+
+- name: install chrony
+  package:
+    name: chrony
+    state: present
+  become: true
+
+- name: Configure chrony
+  template:
+    src: chrony.conf.CentOS.j2
+    dest: /etc/chrony.conf
+  become: true
+  notify: restart chronyd
+
+- name: start chronyd
+  service:
+    name: chronyd
+    state: started
+    enabled: yes
+  become: true

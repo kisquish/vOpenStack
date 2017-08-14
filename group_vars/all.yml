@@ -1,0 +1,7 @@
+---
+
+# subnet op osp nodes
+subnet_ip: "192.168.122.1/24"
+## IPs of nodes
+compute_ip: 192.168.122.101
+controller_ip: 192.168.122.101

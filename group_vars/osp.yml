@@ -1,0 +1,5 @@
+osp_user: ptcadm
+ansible_user: "{{osp_user}}"
+ansible_ssh_user: "{{osp_user}}"
+become_method: sudo
+ansible_become: True
