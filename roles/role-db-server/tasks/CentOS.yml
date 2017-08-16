@@ -1,0 +1,9 @@
+---
+- name: install db pckges on db server
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mariadb
+    - mariadb-server
+    - python2-PyMySQL

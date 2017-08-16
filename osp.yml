@@ -8,3 +8,18 @@
   user: ptcadm
   roles:
     - role-chrony-nodes
+
+- hosts: osp-nodes,osp-controller
+  user: ptcadm
+  roles:
+    - common-conf
+
+- hosts: osp-db-client
+  user: ptcadm
+  roles:
+    - role-db-client 
+
+- hosts: osp-common
+  user: ptcadm
+  roles:
+    - role-db-server

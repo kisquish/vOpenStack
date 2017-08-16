@@ -20,8 +20,9 @@
     state: present
 
 - name: upgrade pckges
-  yum: '*'
-  state: latest
+  yum:
+    name: '*'
+    state: latest
 
 - name: install OpenStack client
   yum:

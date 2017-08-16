@@ -1,6 +1,5 @@
 ---
-# tasks file for roles/common-conf
-
+# tasks file for roles/role-db-server
 - include: CentOS.yml
   when:
     - ansible_distribution == "CentOS"

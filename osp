@@ -1,33 +1,39 @@
 [osp]
-192.168.122.100
-192.168.122.101
-192.168.122.102
-192.168.122.103
-192.168.122.104
+common ansible_host=192.168.122.100
+nova ansible_host=192.168.122.101
+keystone ansible_host=192.168.122.102
+cinder ansible_host=192.168.122.103
+glance ansible_host=192.168.122.104
 
 [osp-common]
-192.168.122.100
+common ansible_host=192.168.122.100
 
 [osp-nova]
-192.168.122.101
+nova ansible_host=192.168.122.101
 
 [osp-keystone]
-192.168.122.102
+keystone ansible_host=192.168.122.102
 
 [osp-cinder]
-192.168.122.103
+cinder ansible_host=192.168.122.103
 
 [osp-glance]
-192.168.122.104
+glance ansible_host=192.168.122.104
 
 [osp-controller]
-192.168.122.101
+nova ansible_host=192.168.122.101
 
 [osp-nodes]
-192.168.122.100
-192.168.122.102
-192.168.122.103
-192.168.122.104
+common ansible_host=192.168.122.100
+keystone ansible_host=192.168.122.102
+cinder ansible_host=192.168.122.103
+glance ansible_host=192.168.122.104
+
+[osp-db-client]
+nova ansible_host=192.168.122.101
+keystone ansible_host=192.168.122.102
+cinder ansible_host=192.168.122.103
+glance ansible_host=192.168.122.104
 
 #[osp-horizon]
 #192.168.122.3

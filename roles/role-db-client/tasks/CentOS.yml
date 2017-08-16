@@ -1,0 +1,9 @@
+---
+
+- name: install db client pckges osp-db clients
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mariadb
+    - python2-PyMySQL
