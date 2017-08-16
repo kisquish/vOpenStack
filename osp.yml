@@ -1,10 +1,10 @@
 ---
-- hosts: osp
+- hosts: osp-controller
   user: ptcadm
   roles:
     - role-chrony-controller
 
-- hosts: osp-horizon
+- hosts: osp-nodes
   user: ptcadm
   roles:
     - role-chrony-nodes

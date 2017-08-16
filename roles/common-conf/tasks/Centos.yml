@@ -10,6 +10,7 @@
     - "{{ keystone_ip }}    {{ keystone_name }}"
     - "{{ glance_ip }}    {{ glance_name }}"
     - "{{ cinder_ip }}    {{ cinder_name }}"
+    - "{{ common_ip }}     {{ common_name }}"
     # - "{{ compute_ip }}    {{ nova}}"
     # - "{{ compute_ip }}    {{ nova}}"
 

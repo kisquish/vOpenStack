@@ -3,6 +3,9 @@
 # subnet op osp nodes
 subnet_ip: "192.168.122.1/24"
 ## IPs of nodes
+common_ip: 192.168.122.100
+common_name: common
+
 compute_ip: 192.168.122.101
 compute_name: nova
 
@@ -12,10 +15,10 @@ controller_name: nova
 keystone_ip: 192.168.122.102
 keystone_name: keystone
 
-glance_ip: 192.168.122.103
+glance_ip: 192.168.122.104
 glance_name: glance
 
-cinder_ip: 192.168.122.104
+cinder_ip: 192.168.122.103
 cinder_name: cinder
 
 ## common osp packages
