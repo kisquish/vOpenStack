@@ -32,3 +32,9 @@
     - python-openstackclient
     - openstack-selinux
 
+- name: stop and disable firewalld service
+  service:
+    name: firewalld
+    enabled: no 
+    state: stopped
+

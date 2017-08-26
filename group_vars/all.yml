@@ -2,7 +2,9 @@
 
 # subnet op osp nodes
 subnet_ip: "192.168.122.1/24"
-## IPs of nodes
+
+## IPs of nodes with modules names
+##################################
 common_ip: 192.168.122.100
 common_name: common
 
@@ -20,6 +22,33 @@ glance_name: glance
 
 cinder_ip: 192.168.122.103
 cinder_name: cinder
+##################################
 
 ## common osp packages
 centos_osp_release: centos-release-openstack-ocata
+
+## paswords for modules and for db access
+#########################################
+admin_pass: ADMIN_PASS
+admin_dbpass: ADMIN_DBPASS
+admin_dbuser: root
+admin_user: admin
+
+cinder_dbpass: CINDER_DBPASS
+cinder_pass: CINDER_PASS
+dash_dbpass: DASH_DBPASS
+#DEMO_PASS                    
+glance_dbpass: GLANCE_DBPASS
+glance_pass: GLANCE_PASS
+
+keystone_dbpass: KEYSTONE_DBPASS
+#METADATA_SECRET
+neutron_dbpass: NEUTRON_DBPASS
+neutron_pass: NEUTRON_PASS
+
+nova_dbpass: NOVA_DBPASS
+nova_pass: NOVA_PASS
+
+rabbit_pass: RABBIT_PASS
+rabbit_user: openstack 
+#########################################

@@ -7,3 +7,9 @@
   with_items:
     - mariadb
     - python2-PyMySQL
+
+# - name: start and enable mariadb service
+#   service:
+#     name: mariadb
+#     state: started
+#     enabled: yes

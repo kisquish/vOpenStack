@@ -7,3 +7,18 @@
     - mariadb
     - mariadb-server
     - python2-PyMySQL
+    - MySQL-python
+
+- name: create and configure openstack.cnf in /etc/my.cnf.d/openstack.cnf
+  template:
+    src: openstack.cnf.j2
+    dest: /etc/my.cnf.d/openstack.cnf
+
+- name: start and enable mariadb service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: secure db server with mysql_secure_installation
+  include: mysql_secure_installation.yml

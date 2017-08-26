@@ -1,0 +1,20 @@
+---
+
+- name: install cache packgs
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - memcached
+    - python-memcached
+
+- name: configure memcached configuration file 
+  template:
+    src: memcached.j2
+    dest: /etc/sysconfig/memcached
+
+- name: start and enable memcached service
+  service:
+    name: firewalld
+    enabled: yes 
+    state: started

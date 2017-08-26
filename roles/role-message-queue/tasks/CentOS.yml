@@ -1,0 +1,23 @@
+---
+- name: install rabbit-mq server pckges
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rabbitmq-server
+
+- name: start and enable rabbit-mq service
+  service:
+    name: rabbitmq-server
+    enabled: yes 
+    state: started
+
+- name: Add rabbit-mq user
+  rabbitmq_user:
+    user: "{{ rabbit_user }}"
+    password: "{{ rabbit_pass }}"
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present

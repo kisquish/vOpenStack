@@ -23,3 +23,5 @@
   user: ptcadm
   roles:
     - role-db-server
+    - role-message-queue
+    - role-memcached

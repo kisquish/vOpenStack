@@ -1,1 +1,5 @@
-192.168.122.101
+cinder
+common
+glance
+keystone
+nova
