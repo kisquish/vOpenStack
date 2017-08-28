@@ -42,6 +42,15 @@ glance_dbpass: GLANCE_DBPASS
 glance_pass: GLANCE_PASS
 
 keystone_dbpass: KEYSTONE_DBPASS
+keystone_db_user: keystone
+keystone_admin_port: 35357
+keystone_public_port: 5000
+keystone_internal_port: 5000
+keystone_admin_url: "http://{{common_ip}}:{{keystone_admin_port}}/{{openstack_api_version}}/"
+keystone_internal_url: "http://{{common_ip}}:{{keystone_internal_port}}/{{openstack_api_version}}/"
+keystone_public_url: "http://{{common_ip}}:{{keystone_public_port}}/{{openstack_api_version}}/"
+openstack_region_00: RegionOne
+
 #METADATA_SECRET
 neutron_dbpass: NEUTRON_DBPASS
 neutron_pass: NEUTRON_PASS

@@ -1,0 +1,54 @@
+---
+
+- name: install packages for keystone
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - openstack-keystone
+    - httpd
+    - mod_wsgi
+
+- name: edit keystone.conf
+  template:
+    src: keystone.conf.j2
+    dest: /etc/keystone/keystone.conf
+
+# - name: Configure Keystone DB access.
+#   ini_file:
+#     dest:    /etc/keystone/keystone.conf
+#     section: database
+#     option:  connection
+#     value:   'mysql+pymysql://keystone:{{ keystone_dbpass }}@{{ common_ip }}/keystone'
+
+# - name: Configure Fernet token provider.
+#   ini_file:
+#     dest:    /etc/keystone/keystone.conf
+#     section: token
+#     option:  provider
+#     value:   fernet
+
+- name:         Populate the Identity service database
+  changed_when: no
+  command:      keystone-manage db_sync
+  become:       true
+  become_user:  keystone
+
+- name:         Initialize Fernet Setup keys.
+  changed_when: no
+  command:      keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+
+- name:         Initialize Credential Setup keys.
+  changed_when: no
+  command:      keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+
+- name: bootstrat the Identity service
+  command: |
+    keystone-manage bootstrat \
+    --bootstrat-password {{ admin_pass }} \
+    --bootstrat-admin-url {{ keystone_admin_url }} \
+    --bootstrat-internal-url {{ keystone_internal_url }} \
+    --bootstrat-public-url {{ keystone_public_url }} \
+    --bootstrat-region-id {{ openstack_region_00 }}
+  register: keystone_service_boostraped
+  until: keystone_service_boostraped | success

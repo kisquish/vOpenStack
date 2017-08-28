@@ -20,5 +20,30 @@
     state: started
     enabled: yes
 
-- name: secure db server with mysql_secure_installation
-  include: mysql_secure_installation.yml
+# - name: secure db server with mysql_secure_installation
+#   include: mysql_secure_installation.yml
+
+- name: create the keystone database
+  mysql_db:
+    name: keystone
+    state: present
+    # login_host: "{{ compute_ip }}"
+    # login_password: "{{ admin_dbpass }}"
+    # login_user: "{{ admin_dbuser }}"
+- name: Create Keystone database users.
+  mysql_user:
+    name:       "{{ keystone_db_user }}"
+    priv:       'keystone.*:ALL,GRANT'
+    state:      present
+    password:   '{{ keystone_dbpass }}'
+    host:       '{{ item }}'
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - '%'
+
+# - name:         Populate Keystone DB.
+#   changed_when: no
+#   command:      keystone-manage db_sync
+#   become:       true
+#   become_user:  keystone
