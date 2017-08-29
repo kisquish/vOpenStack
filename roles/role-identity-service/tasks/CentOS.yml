@@ -52,3 +52,22 @@
     --bootstrat-region-id {{ openstack_region_00 }}
   register: keystone_service_boostraped
   until: keystone_service_boostraped | success
+
+- name: configure httpd.conf  in /etc/httpd/conf/httpd.conf
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+
+- name: link /usr/share/keystone/wsgi-keystone.conf  to /etc/httpd/conf.d/
+  file:
+    src: /usr/share/keystone/wsgi-keystone.conf
+    dest: /etc/httpd/conf.d/
+    #owner: foo
+    #group: foo
+    state: link
+
+- name: start and enable httpd service
+  service:
+    name: httpd
+    state: started
+    enabled: yes
