@@ -33,6 +33,7 @@ admin_pass: ADMIN_PASS
 admin_dbpass: ADMIN_DBPASS
 admin_dbuser: root
 admin_user: admin
+admin_project_name: admin
 
 cinder_dbpass: CINDER_DBPASS
 cinder_pass: CINDER_PASS
@@ -41,15 +42,20 @@ dash_dbpass: DASH_DBPASS
 glance_dbpass: GLANCE_DBPASS
 glance_pass: GLANCE_PASS
 
+openstack_api_version: v3
 keystone_dbpass: KEYSTONE_DBPASS
 keystone_db_user: keystone
 keystone_admin_port: 35357
 keystone_public_port: 5000
 keystone_internal_port: 5000
-keystone_admin_url: "http://{{common_ip}}:{{keystone_admin_port}}/{{openstack_api_version}}/"
-keystone_internal_url: "http://{{common_ip}}:{{keystone_internal_port}}/{{openstack_api_version}}/"
-keystone_public_url: "http://{{common_ip}}:{{keystone_public_port}}/{{openstack_api_version}}/"
+keystone_admin_url: "http://{{keystone_ip}}:{{keystone_admin_port}}/{{openstack_api_version}}/"
+keystone_internal_url: "http://{{keystone_ip}}:{{keystone_internal_port}}/{{openstack_api_version}}/"
+keystone_public_url: "http://{{keystone_ip}}:{{keystone_public_port}}/{{openstack_api_version}}/"
 openstack_region_00: RegionOne
+openstack_user_domain_00: Default
+openstack_project_domain_00: Default
+openstack_auth_url: "http://{{keystone_ip}}:{{keystone_admin_port}}/{{openstack_api_version}}"
+
 
 #METADATA_SECRET
 neutron_dbpass: NEUTRON_DBPASS
