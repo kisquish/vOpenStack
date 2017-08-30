@@ -43,6 +43,8 @@ glance_dbpass: GLANCE_DBPASS
 glance_pass: GLANCE_PASS
 
 openstack_api_version: v3
+openstack_img_api_version: 2
+openstack_idt_api_version: 3
 keystone_dbpass: KEYSTONE_DBPASS
 keystone_db_user: keystone
 keystone_admin_port: 35357

@@ -71,3 +71,18 @@
     name: httpd
     state: started
     enabled: yes
+
+- name: configure administrative account
+  template:
+    src: admin-openrc.j2
+    dest: /root/admin-openrc
+
+- name: create service project
+  os_project:
+    domain_id: "{{ openstack_project_domain_00 }}"
+    name: service
+    description: "Service Project"
+    state: present
+
+
+
