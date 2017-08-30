@@ -1,0 +1,13 @@
+---
+- name:         Get list of projects.
+  register:     openstack_projects
+  changed_when: no
+  command:      openstack project list -f value -c Name --domain default
+
+- name:    Create projects.
+  command: 'openstack project create --domain default --description "{{ item.value }}" {{ item.key }}'
+  when:    '"{{ item.key }}" not in openstack_projects.stdout'
+  with_dict:
+    admin:   Admin Project
+    service: Service Project
+    demo:    Demo Project

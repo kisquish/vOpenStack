@@ -1,27 +1,32 @@
 ---
-- hosts: osp-controller
-  user: ptcadm
-  roles:
-    - role-chrony-controller
+# - hosts: osp-controller
+#   user: ptcadm
+#   roles:
+#     - role-chrony-controller
 
-- hosts: osp-nodes
-  user: ptcadm
-  roles:
-    - role-chrony-nodes
+# - hosts: osp-nodes
+#   user: ptcadm
+#   roles:
+#     - role-chrony-nodes
 
-- hosts: osp-nodes,osp-controller
-  user: ptcadm
-  roles:
-    - common-conf
+# - hosts: osp-nodes,osp-controller
+#   user: ptcadm
+#   roles:
+#     - common-conf
 
-- hosts: osp-db-client
-  user: ptcadm
-  roles:
-    - role-db-client 
+# - hosts: osp-db-client
+#   user: ptcadm
+#   roles:
+#     - role-db-client 
 
-- hosts: osp-common
+# - hosts: osp-common
+#   user: ptcadm
+#   roles:
+#     - role-db-server
+#     - role-message-queue
+#     - role-memcached
+
+- hosts: osp-keystone
   user: ptcadm
   roles:
-    - role-db-server
-    - role-message-queue
-    - role-memcached
+    - role-identity-service

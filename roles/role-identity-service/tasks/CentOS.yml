@@ -1,3 +1,4 @@
+
 ---
 
 - name: install packages for keystone
@@ -30,9 +31,9 @@
 
 - name:         Populate the Identity service database
   changed_when: no
-  command:      keystone-manage db_sync
+  command:      keystone-manage db_sync keystone
   become:       true
-  become_user:  keystone
+  # become_user:  keystone
 
 - name:         Initialize Fernet Setup keys.
   changed_when: no
@@ -41,17 +42,6 @@
 - name:         Initialize Credential Setup keys.
   changed_when: no
   command:      keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
-
-- name: bootstrat the Identity service
-  command: |
-    keystone-manage bootstrat \
-    --bootstrat-password {{ admin_pass }} \
-    --bootstrat-admin-url {{ keystone_admin_url }} \
-    --bootstrat-internal-url {{ keystone_internal_url }} \
-    --bootstrat-public-url {{ keystone_public_url }} \
-    --bootstrat-region-id {{ openstack_region_00 }}
-  register: keystone_service_boostraped
-  until: keystone_service_boostraped | success
 
 - name: configure httpd.conf  in /etc/httpd/conf/httpd.conf
   template:
@@ -72,17 +62,87 @@
     state: started
     enabled: yes
 
+- name: bootstrap the Identity service
+  command: |
+    keystone-manage bootstrap \
+    --bootstrap-password {{ admin_pass }} \
+    --bootstrap-admin-url {{ keystone_admin_url }} \
+    --bootstrap-internal-url {{ keystone_internal_url }} \
+    --bootstrap-public-url {{ keystone_public_url }} \
+    --bootstrap-region-id {{ openstack_region_00 }}
+  register: keystone_service_boostraped
+  until: keystone_service_boostraped | success
+
+# - name: configure administrative account
+#   template:
+#     src: admin-openrc.j2
+#     dest: /root/admin-openrc
 - name: configure administrative account
   template:
-    src: admin-openrc.j2
-    dest: /root/admin-openrc
+    src:  '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  with_items:
+    - src:  admin-openrc.j2
+      dest: /root/admin-openrc
 
-- name: create service project
-  os_project:
-    domain_id: "{{ openstack_project_domain_00 }}"
-    name: service
-    description: "Service Project"
-    state: present
+    - src:  demo-openrc.j2
+      dest: /root/demo-openrc
 
+# - name: create service project
+#   os_project:
+#     domain_id: "{{ openstack_project_domain_00 }}"
+#     name: service
+#     description: "Service Project"
+#     state: present
 
+- name:         Get list of projects.
+  register:     openstack_projects
+  changed_when: no
+  command:      openstack project list -f value -c Name --domain {{ openstack_project_domain_00 }}
 
+- name:    Create projects.
+  command: 'openstack project create --domain {{ openstack_project_domain_00 }} --description "{{ item.value }}" {{ item.key }}'
+  when:    '"{{ item.key }}" not in openstack_projects.stdout'
+  with_dict:
+    admin:   Admin Project
+    service: Service Project
+    demo:    Demo Project
+
+- name:         Get list of users.
+  register:     openstack_users
+  changed_when: no
+  command:      openstack user list -f value -c Name --domain {{ openstack_project_domain_00 }}
+
+- name:    Create users.
+  command: 'openstack user create --domain {{ openstack_project_domain_00 }} --password {{ item.password }} {{ item.name }}'
+  when:    '"{{ item.name }}" not in openstack_users.stdout'
+  with_items:
+    - name: '{{ admin_user }}'
+      password: '{{ admin_pass }}'
+
+    - name: '{{ demo_user }}'
+      password: '{{ demo_pass }}'
+
+- name:         Get list of roles.
+  register:     openstack_roles
+  changed_when: no
+  command:      openstack role list -f value -c Name
+
+- name:    Create roles.
+  command: 'openstack role create {{ item }}'
+  when:    '"{{ item }}" not in openstack_roles.stdout'
+  with_items:
+    - admin
+    - user
+
+- name:         Assign roles.
+  changed_when: no
+  command:      'openstack role add --project {{ item.project }} --user {{ item.user }} {{ item.role }}'
+  with_items:
+    - project: admin
+      user:    admin
+      role:    admin
+
+    - project: demo
+      user:    demo
+      role:    user

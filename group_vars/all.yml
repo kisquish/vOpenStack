@@ -34,11 +34,15 @@ admin_dbpass: ADMIN_DBPASS
 admin_dbuser: root
 admin_user: admin
 admin_project_name: admin
+#DEMO_PASS   
+demo_user: demo
+demo_pass: DEMO_PASS
+demo_project_name: demo
 
 cinder_dbpass: CINDER_DBPASS
 cinder_pass: CINDER_PASS
 dash_dbpass: DASH_DBPASS
-#DEMO_PASS                    
+                 
 glance_dbpass: GLANCE_DBPASS
 glance_pass: GLANCE_PASS
 

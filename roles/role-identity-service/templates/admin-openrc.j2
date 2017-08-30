@@ -3,6 +3,6 @@ export OS_PASSWORD={{ admin_pass }}
 export OS_PROJECT_NAME={{ admin_project_name }}
 export OS_USER_DOMAIN_NAME={{ openstack_user_domain_00 }}
 export OS_PROJECT_DOMAIN_NAME={{ openstack_project_domain_00 }}
-export OS_AUTH_URL=http://controller:{{ keystone_admin_port }}/{{ openstack_api_version }}
+export OS_AUTH_URL=http://{{ keystone_ip }}:{{ keystone_admin_port }}/{{ openstack_api_version }}
 export OS_IDENTITY_API_VERSION={{ openstack_idt_api_version }}
 export OS_IMAGE_API_VERSION={{ openstack_img_api_version }}
